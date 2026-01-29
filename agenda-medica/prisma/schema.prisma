@@ -1,0 +1,21 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Appointment {
+  id        String   @id @default(cuid())
+  name      String
+  age       Int
+  phone     String
+  cpf       String   @unique
+  address   String
+  email     String
+  date      DateTime
+  createdAt DateTime @default(now())
+}
