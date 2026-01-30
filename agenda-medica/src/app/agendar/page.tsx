@@ -33,7 +33,7 @@ export default function AgendaForm() {
   }
 
   return (
-    <div className="w-full h-screen p-10 flex flex-col items-center justify-center">
+    <div className="w-full p-2 py-5 flex flex-col items-center justify-center">
               
       <h1 className="text-2xl font-bold mb-6">AGENDAR CONSULTA</h1>
       <Form action={createPost} className="w-full max-w-md space-y-4 flex flex-col">
