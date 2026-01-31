@@ -1,16 +1,36 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  username  String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+
+  // Relacionamento: Um usuário pode ter vários eventos
+  events Event[]
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String // Ex: "Consultas de Segunda-feira" ou "Mutirão Outubro"
+  description String?
+  date        DateTime // Data do evento em si
+  createdAt   DateTime @default(now())
+
+  // Relacionamento com Usuário
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  // Relacionamento: Um evento pode ter vários agendamentos
+  appointments Appointment[]
 }
 
 model Appointment {
@@ -21,6 +41,10 @@ model Appointment {
   cpf       String   @unique
   address   String
   email     String
-  date      DateTime
+  time      String? // Pode ser o horário específico dentro do evento
   createdAt DateTime @default(now())
+
+  // Relacionamento com o Evento
+  eventId String?
+  event   Event?  @relation(fields: [eventId], references: [id])
 }
