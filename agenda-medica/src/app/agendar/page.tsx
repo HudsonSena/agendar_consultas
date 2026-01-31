@@ -33,10 +33,12 @@ export default function AgendaForm() {
   }
 
   return (
-    <div className="w-full p-2 py-5 flex flex-col items-center justify-center">
-              
-      <h1 className="text-2xl font-bold mb-6">AGENDAR CONSULTA</h1>
-      <Form action={createPost} className="w-full max-w-md space-y-4 flex flex-col">
+    <div className="w-full p-2 py-5 flex flex-col items-center justify-center ">
+      <h1 className="text-2xl font-bold mb-6">Agendar Consulta</h1>
+      <Form
+        action={createPost}
+        className="w-full max-w-md space-y-4 flex flex-col border-t-2 pt-2"
+      >
         <div>
           <label htmlFor="name" className="block text-lg mb-2">
             Name
@@ -115,7 +117,12 @@ export default function AgendaForm() {
         >
           Agendar
         </button>
-        <Link href={"/"} className="border-2 rounded-md w-full flex items-center py-3 justify-center hover:bg-slate-200">Voltar</Link>
+        <Link
+          href={"/"}
+          className="border-2 rounded-md w-full flex items-center py-3 justify-center hover:bg-slate-200"
+        >
+          Voltar
+        </Link>
       </Form>
     </div>
   );
