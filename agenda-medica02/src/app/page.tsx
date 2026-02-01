@@ -5,6 +5,7 @@ import prisma from "../lib/prisma";
 
 export default async function Home() {
   const agendados = await prisma.appointment.findMany();
+  const users = await prisma.user.findMany();
   return (
     <div>
       <h1>Agenda Médica</h1>
@@ -13,6 +14,14 @@ export default async function Home() {
       <SignupForm />
       {agendados.map((item) => (
         <Item key={item.id} data={item} />
+      ))}
+
+      <div>Testando----------------------------------------------</div>
+      {users.map((user) => (
+        <div key={user.id}>
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
+        </div>
       ))}
     </div>
   );
