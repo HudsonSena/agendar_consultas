@@ -1,45 +1,36 @@
 "use server";
-import { SignupFormSchema, FormState } from "../../lib/definitions";
+
 import prisma from "../../lib/prisma";
 import bcrypt from "bcrypt";
+import { SignupFormSchema, SignupFormValues } from "../../lib/definitions";
 
-export async function signup(state: FormState, formData: FormData) {
-  // Validate form fields
-  const validatedFields = SignupFormSchema.safeParse({
-    username: formData.get("username"),
-    name: formData.get("name"),
-    email: formData.get("email"),
-    password: formData.get("password"),
-  });
+export async function signup(values: SignupFormValues) {
+  // 1. Validação extra no servidor
+  const validatedFields = SignupFormSchema.safeParse(values);
 
-  // If any form fields are invalid, return early
   if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-    };
+    return { error: "Dados inválidos." };
   }
 
-  // 2. Prepare data for insertion into database
-  const { username, name, email, password } = validatedFields.data;
-  // e.g. Hash the user's password before storing it
+  const { name, username, email, password } = validatedFields.data;
+
+  // 2. Criptografia
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // 3. Insert the user into the database or call an Auth Library's API
-  const newUser = await prisma.user.create({
-    data: {
-      username,
-      name,
-      email,
-      password: hashedPassword,
-    },
-  });
-
-  console.log("New user created:", newUser);
-
-  if (!newUser) {
-    return {
-      message: "An error occurred while creating your account.",
-    };
+  try {
+    await prisma.user.create({
+      data: {
+        name,
+        username,
+        email,
+        password: hashedPassword,
+      },
+    });
+    return { success: true };
+  } catch (error: string | any) {
+    if (error.code === "P2002") {
+      return { error: "E-mail ou Username já cadastrados." };
+    }
+    return { error: "Erro interno ao criar usuário." };
   }
-  // Call the provider or db to create a user...
 }
