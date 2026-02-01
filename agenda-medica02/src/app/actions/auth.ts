@@ -34,10 +34,9 @@ export async function signup(state: FormState, formData: FormData) {
     },
   });
 
-  const user = newUser[0];
-  console.log("New user created:", user);
+  console.log("New user created:", newUser);
 
-  if (!user) {
+  if (!newUser) {
     return {
       message: "An error occurred while creating your account.",
     };
