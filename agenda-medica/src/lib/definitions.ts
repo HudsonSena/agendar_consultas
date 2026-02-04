@@ -16,3 +16,13 @@ export const SignupFormSchema = z.object({
 });
 
 export type SignupFormValues = z.infer<typeof SignupFormSchema>;
+
+export const SigninFormSchema = z.object({
+  username: z
+    .string()
+    .min(3, { message: "Username deve ter pelo menos 3 caracteres." })
+    .trim(),
+  password: z.string().min(1, { message: "A senha é obrigatória." }),
+});
+
+export type SigninFormValues = z.infer<typeof SigninFormSchema>;

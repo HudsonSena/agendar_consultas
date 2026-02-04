@@ -33,8 +33,6 @@ export default function SignupForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-4 max-w-sm mx-auto p-4"
     >
-      <h1 className="text-2xl font-bold">Criar Conta</h1>
-
       {serverError && (
         <p className="text-red-500 bg-red-100 p-2 rounded text-sm">
           {serverError}
