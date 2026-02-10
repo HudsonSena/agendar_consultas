@@ -39,15 +39,14 @@ export default function SigninForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 max-w-sm mx-auto p-4"
+      className="flex flex-col gap-4 max-w-sm mx-auto p-3"
     >
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium">Username</label>
         <input
           {...register("username")}
           type="text"
           className="border p-2 rounded shadow-sm"
-          placeholder="seu_usuario"
+          placeholder="Nome de usuário"
         />
         {errors.username && (
           <span className="text-red-500 text-xs">
@@ -57,12 +56,11 @@ export default function SigninForm() {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium">Senha</label>
         <input
           {...register("password")}
           type="password"
           className="border p-2 rounded shadow-sm"
-          placeholder="******"
+          placeholder="Senha"
         />
         {errors.password && (
           <span className="text-red-500 text-xs">
